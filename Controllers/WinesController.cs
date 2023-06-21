@@ -148,6 +148,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             }
 
             var wine = await _context.Wines.FindAsync(id);
+            
             if (wine == null)
             {
                 return NotFound();
@@ -166,20 +167,61 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             {
                 return NotFound();
             }
+            wine.Id = id;
+            wine.IdUser = User.Identity.Name;
+            wine.UpdatedAt = DateTime.Now;
+
+            if (!string.IsNullOrEmpty(wine.Brand))
+            {
+                wine.Brand = wine.Brand.ToUpper();
+            }
+            else
+            {
+                var existingWineWithSameNameAndBrand = await _context.Wines.FirstOrDefaultAsync(w => w.Name == wine.Name && w.Brand != null);
+                if (existingWineWithSameNameAndBrand != null)
+                {
+                    wine.Brand = existingWineWithSameNameAndBrand.Brand.ToUpper();
+                }
+
+            }
+
+            if (!string.IsNullOrEmpty(wine.Name))
+            {
+                wine.Name = wine.Name.ToUpper();
+            }
+
+            if (!string.IsNullOrEmpty(wine.Type))
+            {
+                wine.Type = wine.Type.ToUpper();
+            }
+            else
+            {
+                var existingWineWithSameNameAndType = await _context.Wines.FirstOrDefaultAsync(w => w.Name == wine.Name && w.Type != null);
+                if (existingWineWithSameNameAndType != null)
+                {
+                    wine.Type = existingWineWithSameNameAndType.Type.ToUpper();
+                }
+            }
+
+
+            if (string.IsNullOrEmpty(wine.ConsumptionDate.ToString()))
+            {
+                wine.ConsumptionDate = DateTime.Now;
+            }
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(wine.ConsumptionDate.ToString()))
+                    var existingWine = await _context.Wines.FindAsync(wine.Id);
+                    if (existingWine == null)
                     {
-                        wine.ConsumptionDate = DateTime.Now;
+                        return NotFound();
                     }
 
-                    wine.IdUser = User.Identity.Name;
+                    _context.Entry(existingWine).CurrentValues.SetValues(wine);
 
-                    wine.UpdatedAt = DateTime.Now;
-                    _context.Update(wine);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -195,6 +237,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(wine);
         }
 
