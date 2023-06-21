@@ -21,7 +21,6 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             return RedirectToAction("Index","Wines");
         }
 
-        [Authorize]
         public IActionResult Privacy()
         {
             return View();
