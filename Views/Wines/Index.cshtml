@@ -70,10 +70,16 @@
         {
             <div class="col-md-4">
                 <div class="card card-row cursor-pointer" onclick="toggleCardDetails(this)">
-                    <div class="card-body">
-                        <h4 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Name)</h4>
-                        <h6 class="card-title" style="min-height: 20px;">@Html.DisplayFor(modelItem => item.Brand)</h6>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.ConsumptionDate)</p>
+                    <div class="card-body" style="display: flex;justify-content: space-between;">
+                        <div>
+                            <h4 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Name)</h4>
+                            <h6 class="card-title" style="min-height: 20px;">@Html.DisplayFor(modelItem => item.Brand)</h6>
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.ConsumptionDate)</p>
+                        </div>
+                        <div style="text-align: end">
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.Type)</p>
+                            <p>@Html.DisplayFor(modelItem => item.Price)</p>
+                        </div>
                     </div>
                     <div class="card-details">
                         <div style="">
@@ -81,7 +87,6 @@
                             <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-dark">Edit</a>
                             <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Delete</a>
                         </div>
-                         <p>@Html.DisplayFor(modelItem => item.Price)</p>
 
                     </div>
                 </div>

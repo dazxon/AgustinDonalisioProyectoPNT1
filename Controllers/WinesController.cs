@@ -35,7 +35,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             }
 
             var wines = await query
-                .OrderByDescending(w => w.ConsumptionDate.HasValue ? w.ConsumptionDate : w.CreatedAt)
+                .OrderByDescending(w => w.ConsumptionDate)
                 .ToListAsync();
 
             var totalWinesConsumed = await _context.Wines
@@ -126,7 +126,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                     }
                 }
 
-                if (!string.IsNullOrEmpty(wine.ConsumptionDate.ToString()))
+                if (string.IsNullOrEmpty(wine.ConsumptionDate.ToString()))
                 {
                     wine.ConsumptionDate = DateTime.Now;
                 }
@@ -160,7 +160,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdUSer,Brand,Name,Type,CreatedAt,UpdatedAt,Description,Price,Notes")] Wine wine)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Name,Type,Description,Price,Notes")] Wine wine)
         {
             if (id != wine.Id)
             {
@@ -171,6 +171,14 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(wine.ConsumptionDate.ToString()))
+                    {
+                        wine.ConsumptionDate = DateTime.Now;
+                    }
+
+                    wine.IdUser = User.Identity.Name;
+
+                    wine.UpdatedAt = DateTime.Now;
                     _context.Update(wine);
                     await _context.SaveChangesAsync();
                 }
@@ -231,5 +239,6 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         {
           return (_context.Wines?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }
