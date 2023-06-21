@@ -1,4 +1,5 @@
-﻿using AgustinDonalisioProyectoPNT1.Models;
+﻿using AgustinDonalisioProyectoPNT1.Data;
+using AgustinDonalisioProyectoPNT1.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,23 +9,35 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        [Authorize]
+        
         public IActionResult Index()
         {
+            
             return RedirectToAction("Index","Wines");
         }
-
+        
         public IActionResult Privacy()
         {
-            return View();
+            int totalWines = _context.Wines.Count(); 
+            int totalUsers = _context.Users.Count();
+
+            var viewModel = new PrivacyViewModel
+            {
+                TotalWines = totalWines
+            };
+            
+            viewModel.TotalUsers = totalUsers;
+
+            return View(viewModel);
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

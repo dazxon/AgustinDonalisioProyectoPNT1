@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AgustinDonalisioProyectoPNT1.Models.PrivacyViewModel
+@{
     ViewData["Title"] = "About";
 }
 <div class="container mt-4">
@@ -25,7 +26,12 @@
             <p>
                 GitHub del proyecto: <a href="https://github.com/dazxon/AgustinDonalisioProyectoPNT1" target="_blank">https://github.com/dazxon/AgustinDonalisioProyectoPNT1</a>
             </p>
-            
+
+            <hr class=""/>
+
+            <h5>Cantidad de vinos guardados en Base de datos por todos los usuarios:  @Model.TotalWines</h5>
+            <h5>Cantidad de Usuarios guardados en Base de datos:  @Model.TotalUsers</h5>
+
         </div>
     </div>
 </div>

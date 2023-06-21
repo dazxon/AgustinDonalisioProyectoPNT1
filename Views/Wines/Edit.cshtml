@@ -3,7 +3,11 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<style>
+    div{
+        padding-top:10px;
+    }
+</style>
 <h4>Editar Registro</h4>
 <hr />
 <div class="row">
@@ -96,10 +100,8 @@
 
             var select = $("#wineTypeSelect");
 
-            // Ordenar el array de opciones alfabéticamente
             wineTypes.sort();
 
-            // Generar las opciones del campo de selección
             wineTypes.forEach(function (type) {
                 select.append($("<option></option>").text(type));
             });

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AgustinDonalisioProyectoPNT1.Data;
 using AgustinDonalisioProyectoPNT1.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace AgustinDonalisioProyectoPNT1.Controllers
 {
@@ -24,7 +25,10 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         // GET: Wines
         public async Task<IActionResult> Index(string searchTerm)
         {
-            string userId = User.Identity.Name;
+
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
 
             var query = _context.Wines
                 .Where(w => w.IdUser == userId);
@@ -82,7 +86,12 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         {
             if (ModelState.IsValid)
             {
-                wine.IdUser = User.Identity.Name;
+
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                var userId = claim.Value;
+
+                wine.IdUser = userId;
                 wine.CreatedAt = DateTime.Now;
                 wine.UpdatedAt = DateTime.Now;
 
@@ -153,6 +162,8 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             {
                 return NotFound();
             }
+
+            
             return View(wine);
         }
 
@@ -168,7 +179,12 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                 return NotFound();
             }
             wine.Id = id;
-            wine.IdUser = User.Identity.Name;
+
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
+
+            wine.IdUser = userId;
             wine.UpdatedAt = DateTime.Now;
 
             if (!string.IsNullOrEmpty(wine.Brand))
@@ -214,6 +230,10 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             {
                 try
                 {
+                    Console.WriteLine(wine.Type);
+                    Console.WriteLine(wine.Type);
+                    Console.WriteLine(wine.Type);
+
                     var existingWine = await _context.Wines.FindAsync(wine.Id);
                     if (existingWine == null)
                     {
