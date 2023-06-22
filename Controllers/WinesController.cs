@@ -61,6 +61,8 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
 
             var wine = await _context.Wines
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            
             if (wine == null)
             {
                 return NotFound();
@@ -138,7 +140,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                 if (string.IsNullOrEmpty(wine.ConsumptionDate.ToString()))
                 {
                     wine.ConsumptionDate = DateTime.Now;
-                }
+                }   
 
                 _context.Add(wine);
                 await _context.SaveChangesAsync();

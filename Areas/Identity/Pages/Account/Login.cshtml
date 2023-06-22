@@ -1,0 +1,55 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Log in</h2>
+                    <hr />
+                    <form id="account" method="post" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label for="inputEmail" class="form-label">Email</label>
+                            <input asp-for="Input.Email" class="form-control" id="inputEmail" autocomplete="username" aria-required="true" required />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputPassword" class="form-label">Password</label>
+                            <input asp-for="Input.Password" class="form-control" id="inputPassword" autocomplete="current-password" aria-required="true" required />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" asp-for="Input.RememberMe" id="rememberMe" />
+                                <label class="form-check-label" for="rememberMe">
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button id="login-submit" type="submit" class="btn btn-primary">Log in</button>
+                        </div>
+                        <hr />
+                        <div class="text-center">
+                            <p class="mb-2">Forgot your password? </p>
+                                <a id="forgot-password" asp-page="./ForgotPassword" class="btn btn-info">Reset it here</a>
+                            
+                            <p class="mb-2">Don't have an account? </p>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-light">Sign up now</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
