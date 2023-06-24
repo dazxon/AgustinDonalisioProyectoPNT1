@@ -23,22 +23,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Wines" asp-action="Index">
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    @Html.Raw("Consumos")
-                                }
-                                else
-                                {
-                                    @Html.Raw("Home")
-                                }
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-bg-info" asp-area="" asp-controller="Cellars" asp-action="Index">Cellars</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-bg-info" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>

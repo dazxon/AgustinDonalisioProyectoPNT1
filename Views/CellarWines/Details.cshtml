@@ -1,4 +1,4 @@
-﻿@model AgustinDonalisioProyectoPNT1.Models.Cellar
+﻿@model AgustinDonalisioProyectoPNT1.Models.CellarWine
 
 @{
     ViewData["Title"] = "Details";
@@ -14,15 +14,9 @@
 <body>
 
 <div>
-    <h4>Cellar</h4>
+    <h4>CellarWine</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdUser)
         </dt>
@@ -30,17 +24,22 @@
             @Html.DisplayFor(model => model.IdUser)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.IdWine)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.IdWine)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a> |
-    <a asp-action="Create" asp-controller="CellarWines">Add Wine</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 </body>
 </html>
