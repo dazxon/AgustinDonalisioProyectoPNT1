@@ -6,7 +6,7 @@ namespace AgustinDonalisioProyectoPNT1.Models
     {
 
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
 
         public string Name { get; set; }
@@ -15,6 +15,8 @@ namespace AgustinDonalisioProyectoPNT1.Models
         public string IdUser { get; set; }
 
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
     }
 }
+

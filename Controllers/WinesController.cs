@@ -84,6 +84,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Brand,Name,Type,ConsumptionDate,Description,Price,Notes")] Wine wine)
         {
             if (ModelState.IsValid)

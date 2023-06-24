@@ -19,8 +19,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         
         public IActionResult Index()
         {
-            
-            return RedirectToAction("Index","Wines");
+            return View();
         }
         
         public IActionResult Privacy()
@@ -36,6 +35,11 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             viewModel.TotalUsers = totalUsers;
 
             return View(viewModel);
+        }
+
+        public IActionResult Consumos()
+        {
+            return RedirectToAction("Index","Cellars");
         }
 
 
