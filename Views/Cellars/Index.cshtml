@@ -12,6 +12,11 @@
     <title>Index</title>
 </head>
 <body>
+    <form method="get" action="@Url.Action("Index")">
+        <input type="text" name="searchTerm" placeholder="Search by name" />
+        <button type="submit">Search</button>
+    </form>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -22,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdUser)
+                @Html.DisplayNameFor(model => model.WineQuantity)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -37,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdUser)
+                @Html.DisplayFor(modelItem => item.WineQuantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)

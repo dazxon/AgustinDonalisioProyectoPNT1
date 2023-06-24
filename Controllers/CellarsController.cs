@@ -21,16 +21,25 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             _context = context;
         }
 
+        [Authorize]
         // GET: Cellars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-              return _context.Cellars != null ? 
-                          View(await _context.Cellars.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Cellars'  is null.");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var query = _context.Cellars.Where(c => c.IdUser == userId);
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(c => c.Name.Contains(searchTerm));
+            }
+
+            var cellars = await query.ToListAsync();
+            return View(cellars);
         }
 
+
         // GET: Cellars/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Cellars == null)
             {
@@ -58,29 +67,23 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Name,IdUser,Description")] Cellar cellar)
         {
 
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-                var userId = claim.Value;
-                cellar.IdUser = userId;
-
-
-            if (ModelState.IsValid)
-            {
-
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var idUser = claim.Value;
+            cellar.IdUser = idUser;
 
                 _context.Add(cellar);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+
             return View(cellar);
         }
 
         // GET: Cellars/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Cellars == null)
             {
@@ -131,7 +134,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         }
 
         // GET: Cellars/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Cellars == null)
             {
@@ -151,7 +154,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         // POST: Cellars/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Cellars == null)
             {

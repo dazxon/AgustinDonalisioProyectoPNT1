@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AgustinDonalisioProyectoPNT1.Models
 {
     public class Cellar
     {
-
         [Key]
         public int Id { get; set; }
 
@@ -17,6 +17,7 @@ namespace AgustinDonalisioProyectoPNT1.Models
 
         public string? Description { get; set; }
 
+        public int? WineQuantity { get; set; } = 0;
     }
 }
 
