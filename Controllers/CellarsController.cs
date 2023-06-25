@@ -115,7 +115,11 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             }
 
             cellar.Name = cellar.Name.ToUpper();
-            cellar.Description = cellar.Description.ToUpper();
+
+            if (cellar.Description != null)
+            {
+                cellar.Description = cellar.Description.ToUpper();
+            }
 
             if (ModelState.IsValid)
             {
