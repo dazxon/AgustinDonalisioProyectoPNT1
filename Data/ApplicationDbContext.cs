@@ -1,4 +1,5 @@
 ﻿using AgustinDonalisioProyectoPNT1.Models;
+using AgustinDonalisioProyectoPNT1.Models.ViewModel;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,5 +15,8 @@ namespace AgustinDonalisioProyectoPNT1.Data
         public DbSet<Wine> Wines { get; set; }
         public DbSet<Cellar> Cellars { get; set; }
         public DbSet<CellarWine> CellarWines { get; set;}
+
+        public DbSet<CreateWineModel> CreateWineModels { get; set; }
+
     }
 }

@@ -9,6 +9,8 @@ using AgustinDonalisioProyectoPNT1.Data;
 using AgustinDonalisioProyectoPNT1.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using AgustinDonalisioProyectoPNT1.Models.ViewModel;
+using Microsoft.AspNetCore.Server.HttpSys;
 
 namespace AgustinDonalisioProyectoPNT1.Controllers
 {
@@ -69,16 +71,16 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,IdUser,Description")] Cellar cellar)
         {
-
-            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            var idUser = claim.Value;
-            cellar.IdUser = idUser;
-
+            if (ModelState.IsValid)
+            {
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                var idUser = claim.Value;
+                cellar.IdUser = idUser;
                 _context.Add(cellar);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-
+            }
             return View(cellar);
         }
 
@@ -174,5 +176,87 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         {
           return (_context.Cellars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+
+        [HttpPost]
+        public IActionResult CheckWine(string name,int cellarId)
+        {
+            Console.WriteLine(cellarId);
+            var wine = _context.Wines.FirstOrDefault(e => e.Name == name);
+            CreateWineModel model = new CreateWineModel();
+                model.IdCellar = cellarId;
+
+            if (wine != null) { 
+                model.Name = wine.Name;
+                model.Brand = wine.Brand;
+                model.Year = wine.Year;
+                model.Type = wine.Type;
+                model.WineQuantity = 1;
+                return View("AddWine",model);
+            }
+
+            return View("AddWine",model);
+        }
+
+        // GET: Cellars/AddWine?CellarId=
+        public IActionResult AddWine(int cellarId)
+        {
+            CreateWineModel model = new CreateWineModel();
+            model.IdCellar = cellarId;
+            return View(model);
+        }
+
+
+
+        // POST: Cellars/AddWine?CellarId=
+        public async Task<IActionResult> AddWineTwo(CreateWineModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Wine wine = await _context.Wines.FirstOrDefaultAsync(e => e.Name == model.Name);
+
+                if (wine == null)
+                {
+                    wine = new Wine
+                    {
+                        Name = model.Name,
+                        Brand = model.Brand,
+                        Year = model.Year,
+                        Type = model.Type
+                    };
+
+                    _context.Wines.Add(wine);
+                    await _context.SaveChangesAsync();
+
+                }
+
+                CellarWine cellarWine = await _context.CellarWines.FirstOrDefaultAsync(e => e.IdWine == wine.Id && e.IdCellar == model.IdCellar);
+
+                if (cellarWine == null)
+                {
+                    var idWine = await _context.Wines.FirstOrDefaultAsync(e => e.Id == wine.Id);
+
+                    cellarWine = new CellarWine
+                    {
+                        IdWine = idWine.Id,
+                        IdCellar = model.IdCellar,
+                        Quantity = model.WineQuantity
+                    };
+
+                    _context.CellarWines.Add(cellarWine);
+                }
+                else
+                {
+                    cellarWine.Quantity = cellarWine.Quantity + model.WineQuantity;
+                    _context.CellarWines.Update(cellarWine);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

@@ -9,13 +9,16 @@ namespace AgustinDonalisioProyectoPNT1.Models
         [Key]
         public int Id { get; set; }
 
+        [AllowNull]
         public string? Brand { get; set; }
 
+        [AllowNull]
         public string Name { get; set; }
 
         [DisplayName("Variety")]
         public string? Type { get; set; }
 
+        [AllowNull]
         public int Year { get; set; }
     }
 }

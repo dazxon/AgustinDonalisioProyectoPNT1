@@ -32,6 +32,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                 TotalWines = totalWines
             };
             
+            viewModel.TotalWines = totalWines;
             viewModel.TotalUsers = totalUsers;
 
             return View(viewModel);
