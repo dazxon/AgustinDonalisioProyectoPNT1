@@ -1,22 +1,20 @@
 # AgustinDonalisioProyectoPNT1
 
-Este proyecto fue desarrollado para la materia Programación de Nuevas Tecnologías 1 del centro educativo ORT Argentina.
+Este proyecto fue desarrollado para la materia ProgramaciÃ³n de Nuevas TecnologÃ­as 1 del centro educativo ORT Argentina.
 El objetivo del proyecto es implementar un sistema de registro de usuarios que llevan un registro de su consumo de vinos. 
-El proyecto está desarrollado utilizando C# con el patrón de diseño MVC y el framework de Entity Framework.
+El proyecto estÃ¡ desarrollado utilizando C# con el patrÃ³n de diseÃ±o MVC y el framework de Entity Framework.
 
-Si tienes alguna pregunta o quieres obtener más información, no dudes en contactarme.
+## ConfiguraciÃ³n del entorno
 
-## Configuración del entorno
-
-1. Clona este repositorio en tu máquina local.
+1. Clona este repositorio en tu mÃ¡quina local.
 2. Instala las dependencias necesarias.
-3. Configura el archivo de configuración `appsettings.json` con los valores apropiados.
+3. Configura el archivo de configuraciÃ³n `appsettings.json` con los valores apropiados.
 
-## Ejecución del proyecto
+## EjecuciÃ³n del proyecto
 
 1. Abre el proyecto en tu IDE preferido. Preferente Visual Studio 2022
-2. Compila y ejecuta la aplicación.
-3. Abre un navegador web y navega a `http://localhost:puerto` para ver la aplicación en funcionamiento.
+2. Compila y ejecuta la aplicaciÃ³n.
+3. Abre un navegador web y navega a `http://localhost:puerto` para ver la aplicaciÃ³n en funcionamiento.
 
 ## Funcionalidades principales
 
@@ -25,7 +23,7 @@ Si tienes alguna pregunta o quieres obtener más información, no dudes en contact
 - Guardado de Vinos
 - Metricas de Usuarios y Vinos
 
-## Contribución
+## ContribuciÃ³n
 
 1. Haz un fork de este repositorio.
 2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
