@@ -27,7 +27,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var query = _context.Cellars.Where(c => c.IdUser == userId);
-
+            ViewBag.SearchTerm = searchTerm;
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 query = query.Where(c => c.Name.Contains(searchTerm));

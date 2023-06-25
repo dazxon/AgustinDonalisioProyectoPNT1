@@ -6,8 +6,11 @@ namespace AgustinDonalisioProyectoPNT1.Models
     {
         [Key]
         public int Id { get; set; }
+
         public string IdUser { get; set; }
+
         public int IdWine { get; set; }
+
         public int Quantity { get; set; }
     }
 }

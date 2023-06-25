@@ -14,7 +14,16 @@
 <body>
     <form method="get" action="@Url.Action("Index")">
         <input type="text" name="searchTerm" placeholder="Search by Cellar name" />
-        <button type="submit">Search</button>
+        <button type="submit">
+            @if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
+            {
+                <text>Clear Search or New Search</text>
+            }
+            else
+            {
+                <text>New Search</text>
+            }
+        </button>
     </form>
 
 <p>
