@@ -12,84 +12,84 @@
     <title>Add Wine</title>
 </head>
 <body>
-    <h4>Cellar</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="CheckWine" asp-route-cellarId="@Model.IdCellar">
-                <div class="form-group">
-                    <label asp-for="Name">Name:</label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Check Wine" class="btn btn-primary" />
-                </div>
-            </form>
+    <div class="container">
 
-            <form asp-action="AddWineTwo">
-                <div class="form-group" style="display:none;">
-                    <label asp-for="Name">Name:</label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group" style="display:none;">
-                    <label asp-for="IdCellar">idCellar:</label>
-                    <input asp-for="IdCellar" class="form-control" />
-                    <span asp-validation-for="IdCellar" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Brand">Brand:</label>
-                    <input asp-for="Brand" class="form-control" />
-                    <span asp-validation-for="Brand" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Type">Type:</label>
-                    <select asp-for="Type" class="form-control" id="wineTypeSelect">
-                        <option value="" disabled selected>Select Wine Type</option>
-                        <option value="MALBEC">MALBEC</option>
-                        <option value="MERLOT">MERLOT</option>
-                        <option value="CABERNET SAUVIGNON">CABERNET SAUVIGNON</option>
-                        <option value="SYRAH">SYRAH</option>
-                        <option value="PINOT NOIR">PINOT NOIR</option>
-                        <option value="CHARDONNAY">CHARDONNAY</option>
-                        <option value="SAUVIGNON BLANC">SAUVIGNON BLANC</option>
-                        <option value="RIESLING">RIESLING</option>
-                        <option value="GEWÜRZTRAMINER">GEWÜRZTRAMINER</option>
-                        <option value="ZINFANDEL">ZINFANDEL</option>
-                        <option value="CABERNET FRANC">CABERNET FRANC</option>
-                        <option value="TEMPRANILLO">TEMPRANILLO</option>
-                        <option value="GRENACHE">GRENACHE</option>
-                        <option value="MOSCATO">MOSCATO</option>
-                        <option value="PROSECCO">PROSECCO</option>
-                        <option value="SPARKLING WINE">SPARKLING WINE</option>
-                        <option value="PORT">PORT</option>
-                        <option value="SHIRAZ">SHIRAZ</option>
-                        <option value="SANGIOVESE">SANGIOVESE</option>
-                    </select>
-
-                    <span asp-validation-for="Type" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Year">Year:</label>
-                    <input asp-for="Year" class="form-control" />
-                    <span asp-validation-for="Year" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="WineQuantity">Quantity:</label>
-                    <input asp-for="WineQuantity" class="form-control" />
-                    <span asp-validation-for="WineQuantity" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add Wine" class="btn btn-primary" />
-                </div>
-            </form>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+            <h4 class="text-center">Cellar</h4>
+            <hr />
+                <form asp-action="CheckWine" asp-route-cellarId="@Model.IdCellar">
+                    <div class="form-group">
+                        <label asp-for="Name">Name:</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group text-center" style="padding: 10px 0px 0px 0px">
+                        <input type="submit" value="Check Wine" class="btn btn-outline-success" />
+                    </div>
+                </form>
+                <form asp-action="AddWineTwo" style="">
+                    <div class="form-group" style="display:none;">
+                        <label asp-for="Name">Name:</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="display:none;">
+                        <label asp-for="IdCellar">idCellar:</label>
+                        <input asp-for="IdCellar" class="form-control" />
+                        <span asp-validation-for="IdCellar" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding: 10px 0px">
+                        <label asp-for="Brand">Brand:</label>
+                        <input asp-for="Brand" class="form-control" />
+                        <span asp-validation-for="Brand" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding: 10px 0px">
+                        <label asp-for="Type">Type:</label>
+                        <select asp-for="Type" class="form-control" id="wineTypeSelect">
+                            <option value="" disabled selected>Select Wine Type</option>
+                            <option value="MALBEC">MALBEC</option>
+                            <option value="MERLOT">MERLOT</option>
+                            <option value="CABERNET SAUVIGNON">CABERNET SAUVIGNON</option>
+                            <option value="SYRAH">SYRAH</option>
+                            <option value="PINOT NOIR">PINOT NOIR</option>
+                            <option value="CHARDONNAY">CHARDONNAY</option>
+                            <option value="SAUVIGNON BLANC">SAUVIGNON BLANC</option>
+                            <option value="RIESLING">RIESLING</option>
+                            <option value="GEWÜRZTRAMINER">GEWÜRZTRAMINER</option>
+                            <option value="ZINFANDEL">ZINFANDEL</option>
+                            <option value="CABERNET FRANC">CABERNET FRANC</option>
+                            <option value="TEMPRANILLO">TEMPRANILLO</option>
+                            <option value="GRENACHE">GRENACHE</option>
+                            <option value="MOSCATO">MOSCATO</option>
+                            <option value="PROSECCO">PROSECCO</option>
+                            <option value="SPARKLING WINE">SPARKLING WINE</option>
+                            <option value="PORT">PORT</option>
+                            <option value="SHIRAZ">SHIRAZ</option>
+                            <option value="SANGIOVESE">SANGIOVESE</option>
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding: 10px 0px">
+                        <label asp-for="Year">Year:</label>
+                        <input asp-for="Year" class="form-control" min="1900" max="2023" />
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding: 10px 0px">
+                        <label asp-for="WineQuantity">Quantity:</label>
+                        <input asp-for="WineQuantity" class="form-control" min="1" />
+                        <span asp-validation-for="WineQuantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group text-center" style="padding: 20px 0px">
+                        <input type="submit" value="Add Wine" class="btn btn-danger" />
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
+        <div class="text-center">
+            <a asp-action="Details" asp-route-id="@Model.IdCellar" class="btn btn-info">Back to List</a>
+        </div>
     </div>
 </body>
 </html>

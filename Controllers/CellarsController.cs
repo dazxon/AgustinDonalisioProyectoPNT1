@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using AgustinDonalisioProyectoPNT1.Models.ViewModel;
 using Microsoft.AspNetCore.Server.HttpSys;
+using System.Collections;
 
 namespace AgustinDonalisioProyectoPNT1.Controllers
 {
@@ -48,15 +49,38 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                 return NotFound();
             }
 
-            var cellar = await _context.Cellars
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cellar = await _context.Cellars.FirstOrDefaultAsync(m => m.Id == id);
             if (cellar == null)
             {
                 return NotFound();
             }
 
+            var cellarWines = _context.CellarWines.Where(m => m.IdCellar == id).ToList();
+            var wines = new List<CreateWineModel>();
+
+            cellarWines.ForEach(e =>
+            {
+                var wine = _context.Wines.FirstOrDefault(m => m.Id == e.IdWine);
+
+                var aux = new CreateWineModel
+                {
+                    Name = wine.Name,
+                    IdWine = wine.Id,
+                    Year = wine.Year,
+                    Brand = wine.Brand,
+                    WineQuantity = e.Quantity,
+                    Type = wine.Type,
+                    IdCellar = (int)id
+                };
+
+                wines.Add(aux);
+            });
+
+            ViewBag.Wines = wines;
+
             return View(cellar);
         }
+
 
         // GET: Cellars/Create
         public IActionResult Create()
@@ -78,7 +102,12 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                 var idUser = claim.Value;
                 cellar.IdUser = idUser;
                 cellar.Name = cellar.Name.ToUpper();
-                cellar.Description = cellar.Description.ToUpper();
+
+                if (cellar.Description != null)
+                {
+                    cellar.Description = cellar.Description.ToUpper();
+                }
+
                 _context.Add(cellar);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -139,7 +168,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = cellar.Id });
             }
             return View(cellar);
         }
@@ -176,35 +205,36 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             {
                 _context.Cellars.Remove(cellar);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CellarExists(int id)
         {
-          return (_context.Cellars?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Cellars?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
 
         [HttpPost]
-        public IActionResult CheckWine(string name,int cellarId)
+        public IActionResult CheckWine(string name, int cellarId)
         {
             Console.WriteLine(cellarId);
             var wine = _context.Wines.FirstOrDefault(e => e.Name == name);
             CreateWineModel model = new CreateWineModel();
-                model.IdCellar = cellarId;
+            model.IdCellar = cellarId;
 
-            if (wine != null) { 
+            if (wine != null)
+            {
                 model.Name = wine.Name.ToUpper();
                 model.Brand = wine.Brand.ToUpper();
                 model.Year = wine.Year;
                 model.Type = wine.Type.ToUpper();
                 model.WineQuantity = 1;
-                return View("AddWine",model);
+                return View("AddWine", model);
             }
 
-            return View("AddWine",model);
+            return View("AddWine", model);
         }
 
         // GET: Cellars/AddWine?CellarId=
@@ -222,15 +252,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         {
             if (ModelState.IsValid)
             {
-                // el wine
                 Wine wine = await _context.Wines.FirstOrDefaultAsync(e => e.Name == model.Name);
-
-                // la relacion Cellar y Wine
-                CellarWine cellarWine = await _context.CellarWines.FirstOrDefaultAsync(e => e.IdWine == wine.Id && e.IdCellar == model.IdCellar);
-
-                // el cellar
-                Cellar cellar = await _context.Cellars.FirstOrDefaultAsync(e => e.Id == model.IdCellar);
-
                 if (wine == null)
                 {
                     wine = new Wine
@@ -240,38 +262,59 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                         Year = model.Year,
                         Type = model.Type.ToUpper()
                     };
-
                     _context.Wines.Add(wine);
                     await _context.SaveChangesAsync();
-
                 }
 
-
+                CellarWine cellarWine = await _context.CellarWines.FirstOrDefaultAsync(e => e.IdWine == wine.Id && e.IdCellar == model.IdCellar);
                 if (cellarWine == null)
                 {
-                    var idWine = await _context.Wines.FirstOrDefaultAsync(e => e.Id == wine.Id);
-
                     cellarWine = new CellarWine
                     {
-                        IdWine = idWine.Id,
+                        IdWine = wine.Id,
                         IdCellar = model.IdCellar,
                         Quantity = model.WineQuantity
                     };
-
                     _context.CellarWines.Add(cellarWine);
                 }
                 else
                 {
-                    cellarWine.Quantity = cellarWine.Quantity + model.WineQuantity;
+                    cellarWine.Quantity += model.WineQuantity;
                     _context.CellarWines.Update(cellarWine);
                 }
 
-                cellar.WineQuantity = cellar.WineQuantity + model.WineQuantity;
+                Cellar cellar = await _context.Cellars.FirstOrDefaultAsync(e => e.Id == model.IdCellar);
+                if (cellar != null)
+                {
+                    cellar.WineQuantity += model.WineQuantity;
+                }
 
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = model.IdCellar });
+        }
+
+        public async Task<IActionResult> AddToWineAsync(int IdCellar,int IdWine)
+        {
+
+            CellarWine cellarWine = await _context.CellarWines.FirstOrDefaultAsync(e => e.IdCellar == IdCellar && e.IdWine == IdWine);
+            cellarWine.Quantity++;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = IdCellar });
+        }
+
+        public async Task<IActionResult> ResToWineAsync(int IdCellar, int IdWine)
+        {
+
+            CellarWine cellarWine = await _context.CellarWines.FirstOrDefaultAsync(e => e.IdCellar == IdCellar && e.IdWine == IdWine);
+            cellarWine.Quantity--;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = IdCellar });
         }
 
 

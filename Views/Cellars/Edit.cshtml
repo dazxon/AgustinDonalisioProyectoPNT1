@@ -13,46 +13,56 @@
 </head>
 <body>
 
-<h4>Cellar</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group" style="display: none">
-                <label asp-for="IdUser" class="control-label"></label>
-                <input asp-for="IdUser" class="form-control" />
-                <span asp-validation-for="IdUser" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-                <div class="form-group" style="display: none">
-                    <label asp-for="WineQuantity" class="control-label"></label>
-                    <input asp-for="WineQuantity" class="form-control" />
-                    <span asp-validation-for="WineQuantity" class="text-danger"></span>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h4 class="text-center">Edit Cellar</h4>
+                <hr />
+
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" style="display: none">
+                        <label asp-for="IdUser" class="control-label"></label>
+                        <input asp-for="IdUser" class="form-control" />
+                        <span asp-validation-for="IdUser" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" style="padding: 20px 0px">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" style="display: none">
+                        <label asp-for="WineQuantity" class="control-label"></label>
+                        <input asp-for="WineQuantity" class="form-control" min="1" />
+                        <span asp-validation-for="WineQuantity" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Save" class="btn btn-danger"/>
+                    </div>
+                </form>
+
+                <div class="text-center" style="padding-top: 10px">
+                    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">Back to List</a>
                 </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
 </body>
 </html>
