@@ -16,5 +16,7 @@ namespace AgustinDonalisioProyectoPNT1.Models.ViewModel
         public String Type { get; set; }
         public int Year { get; set; }
         public int WineQuantity { get; set; }
+
+        public bool IsWine { get; set; } = false;
     }
 }

@@ -10,6 +10,26 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Add Wine</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var isWineString = "@Model.IsWine.ToString().ToLower()";
+            var isWine = (isWineString === "true");
+
+            if (isWine) {
+                document.getElementById("brand").readOnly = true;
+                document.getElementById("wineTypeSelect").disabled = true;
+                document.getElementById("year").readOnly = true;
+            }
+
+            var form = document.getElementById("formAdd");
+            form.addEventListener("submit",function(event){
+                document.getElementById("brand").removeAttribute("readonly");
+                document.getElementById("wineTypeSelect").removeAttribute("disabled");
+                document.getElementById("year").removeAttribute("readonly");
+            })
+        });
+
+    </script>
 </head>
 <body>
     <div class="container">
@@ -28,7 +48,7 @@
                         <input type="submit" value="Check Wine" class="btn btn-outline-success" />
                     </div>
                 </form>
-                <form asp-action="AddWineTwo" style="">
+                <form asp-action="AddWineTwo" style="" id="formAdd">
                     <div class="form-group" style="display:none;">
                         <label asp-for="Name">Name:</label>
                         <input asp-for="Name" class="form-control" />
@@ -41,7 +61,7 @@
                     </div>
                     <div class="form-group" style="padding: 10px 0px">
                         <label asp-for="Brand">Brand:</label>
-                        <input asp-for="Brand" class="form-control" />
+                        <input asp-for="Brand" class="form-control" id="brand"/>
                         <span asp-validation-for="Brand" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="padding: 10px 0px">
@@ -72,16 +92,16 @@
                     </div>
                     <div class="form-group" style="padding: 10px 0px">
                         <label asp-for="Year">Year:</label>
-                        <input asp-for="Year" class="form-control" min="1900" max="2023" />
+                        <input asp-for="Year" class="form-control" min="1900" max="2023" id="year"/>
                         <span asp-validation-for="Year" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="padding: 10px 0px">
                         <label asp-for="WineQuantity">Quantity:</label>
-                        <input asp-for="WineQuantity" class="form-control" min="1" />
+                        <input asp-for="WineQuantity" class="form-control" min="1" id="quantity"/>
                         <span asp-validation-for="WineQuantity" class="text-danger"></span>
                     </div>
                     <div class="form-group text-center" style="padding: 20px 0px">
-                        <input type="submit" value="Add Wine" class="btn btn-danger" />
+                        <input type="submit" value="Add Wine" class="btn btn-danger" id="submit"/>
                     </div>
                 </form>
             </div>

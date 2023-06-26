@@ -231,6 +231,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                 model.Year = wine.Year;
                 model.Type = wine.Type.ToUpper();
                 model.WineQuantity = 1;
+                model.IsWine = true;
                 return View("AddWine", model);
             }
 
@@ -301,6 +302,9 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             CellarWine cellarWine = await _context.CellarWines.FirstOrDefaultAsync(e => e.IdCellar == IdCellar && e.IdWine == IdWine);
             cellarWine.Quantity++;
 
+            Cellar cellar = await _context.Cellars.FirstOrDefaultAsync(e => e.Id == IdCellar);
+            cellar.WineQuantity++;
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = IdCellar });
@@ -311,6 +315,14 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
 
             CellarWine cellarWine = await _context.CellarWines.FirstOrDefaultAsync(e => e.IdCellar == IdCellar && e.IdWine == IdWine);
             cellarWine.Quantity--;
+
+            Cellar cellar = await _context.Cellars.FirstOrDefaultAsync(e => e.Id == IdCellar);
+            cellar.WineQuantity--;
+
+            if (cellarWine.Quantity == 0)
+            {
+                _context.CellarWines.Remove(cellarWine);
+            }
 
             await _context.SaveChangesAsync();
 
