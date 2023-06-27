@@ -18,19 +18,13 @@
 </head>
 
 <body>
-    <form method="get" action="@Url.Action("Index")">
-        <input type="text" name="searchTerm" placeholder="Search by Cellar name" />
-        <button type="submit">
-            @if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
-            {
-                <text>Clear Search or New Search</text>
-            }
-            else
-            {
-                <text>New Search</text>
-            }
+    <div>
+        <input type="text" id="searchTerm" placeholder="Search Cellar" onkeyup="handleSearch()" />
+
+        <button type="submit" onclick="handleSearchButton()">
+            <text>Clear Search</text>
         </button>
-    </form>
+    </div>
 
     <p>
         <a asp-action="Create">Create New</a>
@@ -38,13 +32,13 @@
 
     @if (Model.Any())
     {
-        <table class="table table-striped">
+        <table class="table table-striped table-row">
             <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
-                    <th>
+                    <th style="text-align: center;">
                         @Html.DisplayNameFor(model => model.WineQuantity)
                     </th>
                     <th>
@@ -56,17 +50,17 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr onclick="location.href='@Url.Action("Details", new { id = item.Id })'" style="vertical-align: baseline" class="custom-hover-row">
+                    <tr onclick="location.href='@Url.Action("Details", new { id = item.Id })'" style="vertical-align: baseline" class="custom-hover-row cellar-row">
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
-                        <td>
+                        <td style="text-align: center;">
                             @Html.DisplayFor(modelItem => item.WineQuantity)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
-                        <td>
+                        <td style="text-align: end;">
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a> |
                             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
@@ -80,6 +74,28 @@
     {
         <p>No cellars found.</p>
     }
+
+    <script>
+        function handleSearch() {
+            let searchTerm = document.getElementById("searchTerm").value.toLowerCase();
+            let cellarRows = document.getElementsByClassName("cellar-row");
+
+            for (let i = 0; i < cellarRows.length; i++) {
+                let cellarName = cellarRows[i].getElementsByTagName("td")[0].textContent.toLowerCase();
+
+                if (cellarName.includes(searchTerm)) {
+                    cellarRows[i].style.display = "table-row";
+                } else {
+                    cellarRows[i].style.display = "none";
+                }
+            }
+        }
+
+        function handleSearchButton() {
+            document.getElementById("searchTerm").value = "";
+            handleSearch();
+        }
+    </script>
 </body>
 </html>
 

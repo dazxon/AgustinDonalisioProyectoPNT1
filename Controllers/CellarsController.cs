@@ -26,16 +26,15 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
 
         [Authorize]
         // GET: Cellars
-        public async Task<IActionResult> Index(string searchTerm)
+        public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var query = _context.Cellars.Where(c => c.IdUser == userId);
-            ViewBag.SearchTerm = searchTerm;
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                query = query.Where(c => c.Name.Contains(searchTerm));
-            }
-
+            //ViewBag.SearchTerm = searchTerm;
+            //if (!string.IsNullOrEmpty(searchTerm))
+            //{
+            //    query = query.Where(c => c.Name.Contains(searchTerm));
+            //}
             var cellars = await query.ToListAsync();
             return View(cellars);
         }
@@ -203,6 +202,8 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             var cellar = await _context.Cellars.FindAsync(id);
             if (cellar != null)
             {
+                var cellarList = _context.CellarWines.Where(w => w.IdCellar == cellar.Id).ToList();
+                _context.CellarWines.RemoveRange(cellarList);
                 _context.Cellars.Remove(cellar);
             }
 

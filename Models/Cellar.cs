@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
@@ -18,6 +19,7 @@ namespace AgustinDonalisioProyectoPNT1.Models
         public string? Description { get; set; }
 
         [AllowNull]
+        [Display(Name = "Wine Quantity")]
         public int? WineQuantity { get; set; } = 0;
     }
 }

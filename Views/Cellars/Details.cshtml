@@ -20,10 +20,9 @@
             text-align: center;
         }
     </style>
-
 </head>
 <body>
-
+    
     <div class="container">
         <h4 class="mt-4">Cellar</h4>
         <hr />
@@ -46,22 +45,31 @@
     @if (ViewBag.Wines != null && ((List<AgustinDonalisioProyectoPNT1.Models.ViewModel.CreateWineModel>)ViewBag.Wines).Count > 0)
     {
         <div class="container mt-4">
+            <div>
+                <input type="text" id="searchTerm" placeholder="Search Wine" onkeyup="handleSearch()" />
+
+                <button type="submit" onclick="handleSearchButton()">
+                    <text>Clear Search</text>
+                </button>
+            </div>
             <h3>Wines:</h3>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Brand</th>
-                        <th>Type</th>
+                        <th>Variety</th>
                         <th>Year</th>
                         <th>Quantity</th>
-                        <th>Actions</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
+                    
+
                     @foreach (var wine in ViewBag.Wines)
                     {
-                        <tr>
+                        <tr class="wine-row">
                             <td>@wine.Name</td>
                             <td>@wine.Brand</td>
                             <td>@wine.Type</td>
@@ -92,6 +100,26 @@
         <a class="btn btn-info" asp-action="Index">Back to List</a> |
         <a class="btn btn-success" asp-action="AddWine" asp-route-cellarId="@Model.Id">Add Wine</a>
     </div>
+    <script>
+        function handleSearch() {
+            var searchTerm = document.getElementById("searchTerm").value.toLowerCase();
+            var wineRows = document.getElementsByClassName("wine-row");
 
+            for (var i = 0; i < wineRows.length; i++) {
+                var wineName = wineRows[i].getElementsByTagName("td")[0].textContent.toLowerCase();
+
+                if (wineName.includes(searchTerm)) {
+                    wineRows[i].style.display = "table-row";
+                } else {
+                    wineRows[i].style.display = "none";
+                }
+            }
+        }
+
+        function handleSearchButton(){
+            document.getElementById("searchTerm").value = "";
+            handleSearch();
+        }
+    </script>
 </body>
 </html>

@@ -11,23 +11,45 @@
     <meta name="viewport" content="width=device-width" />
     <title>Add Wine</title>
     <script>
+
+
         document.addEventListener("DOMContentLoaded", function () {
             var isWineString = "@Model.IsWine.ToString().ToLower()";
             var isWine = (isWineString === "true");
 
+            let brand = document.getElementById("brand");
+            let type = document.getElementById("wineTypeSelect");
+            let year = document.getElementById("year");
+            let submit = document.getElementById("submit");
+
+
             if (isWine) {
-                document.getElementById("brand").readOnly = true;
-                document.getElementById("wineTypeSelect").disabled = true;
-                document.getElementById("year").readOnly = true;
+                brand.readOnly = true;
+                type.disabled = true;
+                year.readOnly = true;
             }
 
             var form = document.getElementById("formAdd");
+
             form.addEventListener("submit",function(event){
-                document.getElementById("brand").removeAttribute("readonly");
-                document.getElementById("wineTypeSelect").removeAttribute("disabled");
-                document.getElementById("year").removeAttribute("readonly");
+                brand.removeAttribute("readonly");
+                type.removeAttribute("disabled");
+                year.removeAttribute("readonly");
             })
+
+            let name = document.getElementById("nameCheck");
+            let s = document.getElementById("divSubmit");
+            
+
+            if(name.value != ""){
+                submit.removeAttribute("disabled");
+            }
+
         });
+
+        
+
+        
 
     </script>
 </head>
@@ -45,18 +67,18 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group text-center" style="padding: 10px 0px 0px 0px">
-                        <input type="submit" value="Check Wine" class="btn btn-outline-success" />
+                        <input type="submit" value="Check Wine" class="btn btn-outline-success"/>
                     </div>
                 </form>
                 <form asp-action="AddWineTwo" style="" id="formAdd">
                     <div class="form-group" style="display:none;">
                         <label asp-for="Name">Name:</label>
-                        <input asp-for="Name" class="form-control" />
+                        <input asp-for="Name" class="form-control" id="nameCheck" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="display:none;">
                         <label asp-for="IdCellar">idCellar:</label>
-                        <input asp-for="IdCellar" class="form-control" />
+                        <input asp-for="IdCellar" class="form-control" id="idCheck" />
                         <span asp-validation-for="IdCellar" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="padding: 10px 0px">
@@ -100,8 +122,8 @@
                         <input asp-for="WineQuantity" class="form-control" min="1" id="quantity"/>
                         <span asp-validation-for="WineQuantity" class="text-danger"></span>
                     </div>
-                    <div class="form-group text-center" style="padding: 20px 0px">
-                        <input type="submit" value="Add Wine" class="btn btn-danger" id="submit"/>
+                    <div class="form-group text-center" style="padding: 20px 0px" id="divSubmit">
+                        <input type="submit" value="Add Wine" class="btn btn-danger" id="submit" disabled/>
                     </div>
                 </form>
             </div>
