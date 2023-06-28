@@ -45,10 +45,10 @@
     @if (ViewBag.Wines != null && ((List<AgustinDonalisioProyectoPNT1.Models.ViewModel.CreateWineModel>)ViewBag.Wines).Count > 0)
     {
         <div class="container mt-4">
-            <div>
+            <div class="" style="margin: 10px 0px">
                 <input type="text" id="searchTerm" placeholder="Search Wine" onkeyup="handleSearch()" />
 
-                <button type="submit" onclick="handleSearchButton()">
+                <button type="submit" onclick="handleSearchButton()" class="btn btn-warning">
                     <text>Clear Search</text>
                 </button>
             </div>

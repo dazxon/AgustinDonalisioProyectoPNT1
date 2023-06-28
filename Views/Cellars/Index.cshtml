@@ -5,75 +5,84 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Index</title>
-<style>
+    <style>
         .custom-hover-row:hover {
             cursor: pointer;
         }
-</style>
+    </style>
 </head>
 
 <body>
-    <div>
-        <input type="text" id="searchTerm" placeholder="Search Cellar" onkeyup="handleSearch()" />
+    <div class="container">
+        <div class="row">
+            <div class="">
+                <input type="text" id="searchTerm" placeholder="Search Cellar" onkeyup="handleSearch()" class="" />
 
-        <button type="submit" onclick="handleSearchButton()">
-            <text>Clear Search</text>
-        </button>
-    </div>
+                <button type="submit" onclick="handleSearchButton()" class="btn btn-warning mt-2">
+                    Clear Search
+                </button>
+            </div>
+        </div>
 
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
+        <div class="row mt-4">
+            <div class="col-12">
+                <p>
+                    <a asp-action="Create" class="btn btn-light">Create New</a>
+                </p>
 
-    @if (Model.Any())
-    {
-        <table class="table table-striped table-row">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th style="text-align: center;">
-                        @Html.DisplayNameFor(model => model.WineQuantity)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+                @if (Model.Any())
                 {
-                    <tr onclick="location.href='@Url.Action("Details", new { id = item.Id })'" style="vertical-align: baseline" class="custom-hover-row cellar-row">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td style="text-align: center;">
-                            @Html.DisplayFor(modelItem => item.WineQuantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td style="text-align: end;">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th style="text-align: center;">
+                                    @Html.DisplayNameFor(model => model.WineQuantity)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr onclick="location.href='@Url.Action("Details", new { id = item.Id })'" style="vertical-align: baseline;" class="custom-hover-row cellar-row">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @Html.DisplayFor(modelItem => item.WineQuantity)
+                                    </td>
+                                    <td class="text-truncate">
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td style="text-align: end;" class="text-truncate">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
+                                        <span class="d-none d-sm-inline-block">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info ">Details</a> |
+                                        </span>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>No cellars found.</p>
-    }
+                else
+                {
+                    <p>No cellars found.</p>
+                }
+            </div>
+        </div>
+    </div>
 
     <script>
         function handleSearch() {
@@ -98,4 +107,3 @@
     </script>
 </body>
 </html>
-
