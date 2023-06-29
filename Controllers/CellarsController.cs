@@ -306,8 +306,9 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             Cellar cellar = await _context.Cellars.FirstOrDefaultAsync(e => e.Id == IdCellar);
             cellar.WineQuantity++;
 
-            await _context.SaveChangesAsync();
 
+
+            await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = IdCellar });
         }
 
@@ -320,15 +321,38 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
             Cellar cellar = await _context.Cellars.FirstOrDefaultAsync(e => e.Id == IdCellar);
             cellar.WineQuantity--;
 
+            Wine wine = await _context.Wines.FirstOrDefaultAsync(e => e.Id == IdWine);
+
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var idUser = claim.Value;
+
+            //realizar agregacion tabla history
+            HistoryWine log = new HistoryWine
+            {
+                CellarName = cellar.Name,
+                WineName = wine.Name,
+                WineBrand = wine.Brand,
+                WineType = wine.Type,
+                WineYear = wine.Year,
+                Consumed = DateTime.Now,
+                UserId = idUser
+            };
+
+            _context.HistoryWines.Add(log);
+                
             if (cellarWine.Quantity == 0)
             {
                 _context.CellarWines.Remove(cellarWine);
             }
 
-            await _context.SaveChangesAsync();
 
+            await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = IdCellar });
         }
+
+
+
 
 
     }

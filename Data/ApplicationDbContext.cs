@@ -18,5 +18,6 @@ namespace AgustinDonalisioProyectoPNT1.Data
 
         public DbSet<CreateWineModel> CreateWineModels { get; set; }
 
+        public DbSet<HistoryWine> HistoryWines { get; set; }
     }
 }

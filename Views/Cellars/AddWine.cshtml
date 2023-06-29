@@ -83,12 +83,12 @@
                     </div>
                     <div class="form-group" style="padding: 10px 0px">
                         <label asp-for="Brand">Brand:</label>
-                        <input asp-for="Brand" class="form-control" id="brand"/>
+                        <input asp-for="Brand" class="form-control" id="brand" required/>
                         <span asp-validation-for="Brand" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="padding: 10px 0px">
                         <label asp-for="Type">Type:</label>
-                        <select asp-for="Type" class="form-control" id="wineTypeSelect">
+                        <select asp-for="Type" class="form-control" id="wineTypeSelect" required>
                             <option value="" disabled selected>Select Wine Type</option>
                             <option value="MALBEC">MALBEC</option>
                             <option value="MERLOT">MERLOT</option>

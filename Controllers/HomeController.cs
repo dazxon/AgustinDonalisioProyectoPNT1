@@ -19,7 +19,7 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
         
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index","History");
         }
         
         public IActionResult Privacy()

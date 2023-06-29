@@ -15,7 +15,13 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Wine Tracker</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wine" viewBox="0 0 16 16">
+                        <path d="M3.313 12.5L2 15h12l-1.313-2.5H3.313zM10.5 10H11v2.055a2.968 2.968 0 0 1-1.5 0V10zM4 2h8v2H4V2zm8 4v1.079c0 2.45-1.713 4.773-4 5.421V14h-1.5v-1.5a4.519 4.519 0 0 0-1 0V14H4v-1.5C2.713 11.852 1 9.529 1 7.079V6h3V5H1V4h3V3h2v1h2V3h2v1h3v1zM4 6h2v2H4V6zm2 2h2v2H6V8zm2 2h2v2H8v-2zm-2 2h2v2H6v-2zm2 2h2v2H8v-2zm-2 2h2v2H6v-2zm2 2h2v2H8v-2z" />
+                    </svg>
+                    Stock Vinos
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,10 +29,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Cellars" asp-action="Index">Cellars</a>
+                            <a class="nav-link text-bg-info" asp-area="" asp-controller="History" asp-action="Index">Historial</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
+                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Cellars" asp-action="Index">Cavas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Home" asp-action="Privacy">Acerca de</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<AgustinDonalisioProyectoPNT1.Models.HistoryWine>
+
+
+<div class="row">
+    <div class="">
+        <input type="text" id="searchTerm" placeholder="Search Cellar" onkeyup="handleSearch()" class="" />
+
+        <button type="submit" onclick="handleSearchButton()" class="btn btn-warning mt-2">
+            Clear Search
+        </button>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CellarName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WineBrand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WineType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WineYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consumed)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null){
+            @foreach (var item in Model) {
+                <tr class="cellar-row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.CellarName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WineName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WineBrand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WineType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WineYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Consumed)
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+<script>
+    function handleSearch() {
+        let searchTerm = document.getElementById("searchTerm").value.toLowerCase();
+        let cellarRows = document.getElementsByClassName("cellar-row");
+
+        for (let i = 0; i < cellarRows.length; i++) {
+            let row = cellarRows[i];
+            let displayRow = false;
+            for (let j = 0; j < row.cells.length; j++) {
+                let cellValue = row.cells[j].textContent.toLowerCase();
+
+                if (cellValue.includes(searchTerm)) {
+                    displayRow = true;
+                    break;
+                }
+            }
+
+            if (displayRow) {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+
+    function handleSearchButton() {
+        document.getElementById("searchTerm").value = "";
+        handleSearch();
+    }
+</script>
