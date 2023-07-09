@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,12 +28,21 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
-                            <a class="nav-link text-bg-info" asp-area="" asp-controller="History" asp-action="Index">Historial</a>
+                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Data" asp-action="Index">Welcome</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-bg-info" asp-area="" asp-controller="Cellars" asp-action="Index">Cavas</a>
-                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-bg-info" asp-area="" asp-controller="History" asp-action="Index">Historial</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-bg-info" asp-area="" asp-controller="Cellars" asp-action="Index">Cavas</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-bg-info" asp-area="" asp-controller="Home" asp-action="Privacy">Acerca de</a>
                         </li>

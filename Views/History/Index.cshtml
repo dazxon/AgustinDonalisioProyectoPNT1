@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<AgustinDonalisioProyectoPNT1.Models.HistoryWine>
 
 
+@if(Model != null && Model.Any())
+{
 <div class="row">
     <div class="">
         <input type="text" id="searchTerm" placeholder="Search Cellar" onkeyup="handleSearch()" class="" />
@@ -10,56 +12,62 @@
         </button>
     </div>
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CellarName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WineName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WineBrand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WineType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WineYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Consumed)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if(Model != null){
-            @foreach (var item in Model) {
-                <tr class="cellar-row">
-                <td>
-                    @Html.DisplayFor(modelItem => item.CellarName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WineName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WineBrand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WineType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WineYear)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Consumed)
-                </td>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CellarName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WineName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WineBrand)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WineType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WineYear)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Consumed)
+                </th>
             </tr>
-            }
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+                @foreach (var item in Model) {
+                    <tr class="cellar-row">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CellarName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WineName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WineBrand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WineType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WineYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Consumed)
+                    </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        <h2>No hay vinos consumidos</h2>
+        <a asp-controller="Cellars" asp-action="Index" style="text-decoration: none" class="btn btn-warning mt-2"> Ir a cavas </a>
+    </div>
+}
 <script>
     function handleSearch() {
         let searchTerm = document.getElementById("searchTerm").value.toLowerCase();
