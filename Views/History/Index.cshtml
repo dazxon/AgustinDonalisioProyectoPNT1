@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<AgustinDonalisioProyectoPNT1.Models.HistoryWine>
-
+@{
+    ViewData["Title"] = "Historial";
+}
 
 @if(Model != null && Model.Any())
 {
 <div class="row">
-    <div class="">
-        <input type="text" id="searchTerm" placeholder="Search Cellar" onkeyup="handleSearch()" class="" />
+    <div class="" style="display: flex; margin: 10px 0px">
+        <input type="text" id="searchTerm" placeholder="Buscar vino" onkeyup="handleSearch()" style="max-width: 200px;margin-right: 10px" class="form-control mt-2" />
 
-        <button type="submit" onclick="handleSearchButton()" class="btn btn-warning mt-2">
+        <button type="submit" onclick="handleSearchButton()" class="btn btn-warning mt-2" style="max-width: 200px;margin-right: 10px">
             Clear Search
         </button>
     </div>

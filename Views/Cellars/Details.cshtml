@@ -1,7 +1,7 @@
 ﻿@model AgustinDonalisioProyectoPNT1.Models.Cellar
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
 <!DOCTYPE html>
@@ -23,37 +23,38 @@
 </head>
 <body>
     
-    <div class="container">
-        <h4 class="mt-4">Cellar</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-        </dl>
+    <div class="container" style="margin: 20px 0px">
+        <div>
+            <h1 class="mt-4 text-center" style="zoom: 1.2">Cava : @Model.Name</h1>
+
+            @if(Model.Description != null)
+            {
+                <h5 class="text-center" style="font-style: italic;zoom: 0.8">"@Model.Description"</h5>
+            }
+           
+        </div>
     </div>
 
-    @if (ViewBag.Wines != null && ((List<AgustinDonalisioProyectoPNT1.Models.ViewModel.CreateWineModel>)ViewBag.Wines).Count > 0)
+    @if (ViewBag.Wines != null && ((List<AgustinDonalisioProyectoPNT1.Models.ViewModel.CreateWineModel>)ViewBag.Wines).Any())
     {
         <div class="container mt-4">
-            <div class="" style="margin: 10px 0px">
-                <input type="text" id="searchTerm" placeholder="Search Wine" onkeyup="handleSearch()" />
-
+            <div class="" style="margin: 10px 0px;display: flex">
+                <input type="text" id="searchTerm" placeholder="Buscar Vino" onkeyup="handleSearch()" class="form-control" style="max-width: 200px;margin-right: 10px" list="wineOptions"/>
+                <datalist id="wineOptions">
+                    @foreach (var wine in ViewBag.Wines)
+                    {
+                        <option value="@wine.Name" />
+                    }
+                </datalist>
                 <button type="submit" onclick="handleSearchButton()" class="btn btn-warning">
                     <text>Clear Search</text>
                 </button>
             </div>
-            <h3>Wines:</h3>
-            <table class="table table-bordered table-striped">
+
+            <h3>Vinos en cava @Model.Name: @Model.WineQuantity</h3>
+
+
+            <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -83,23 +84,30 @@
                     }
                 </tbody>
             </table>
+            <div class="container mt-4" style="text-align: center">
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Edit Cellar</a> |
+                <a class="btn btn-info" asp-action="Index">Back to List</a> |
+                <a class="btn btn-success" asp-action="AddWine" asp-route-cellarId="@Model.Id">Add Wine</a>
+            </div>
         </div>
+        
     }
     else
     {
-        <div class="container mt-4">
-            <h3>Wines:</h3>
-            <p>
-                No wines found
-            </p>
+        <div class="container mt-4 text-center">
+            <h4 style="padding: 10px 0px">
+                @Model.Name no tiene vinos
+            </h4>
+            <a class="btn btn-success" asp-action="AddWine" asp-route-cellarId="@Model.Id" style="zoom: 1.3">Agregar Vino</a>
+
+        </div>
+
+        <div class="container mt-4" style="text-align: center">
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Editar Cava</a> |
+            <a class="btn btn-info" asp-action="Index">Volver al menu</a> 
         </div>
     }
 
-    <div class="container mt-4">
-        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Edit Cellar</a> |
-        <a class="btn btn-info" asp-action="Index">Back to List</a> |
-        <a class="btn btn-success" asp-action="AddWine" asp-route-cellarId="@Model.Id">Add Wine</a>
-    </div>
     <script>
         function handleSearch() {
             var searchTerm = document.getElementById("searchTerm").value.toLowerCase();
@@ -107,8 +115,10 @@
 
             for (var i = 0; i < wineRows.length; i++) {
                 var wineName = wineRows[i].getElementsByTagName("td")[0].textContent.toLowerCase();
+                var wineBrand = wineRows[i].getElementsByTagName("td")[1].textContent.toLowerCase();
+                var wineType = wineRows[i].getElementsByTagName("td")[2].textContent.toLowerCase();
 
-                if (wineName.includes(searchTerm)) {
+                if (wineName.includes(searchTerm) || wineBrand.includes(searchTerm) || wineType.includes(searchTerm)) {
                     wineRows[i].style.display = "table-row";
                 } else {
                     wineRows[i].style.display = "none";

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AgustinDonalisioProyectoPNT1.Models.Cellar>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cava";
 }
 
 <!DOCTYPE html>
@@ -21,8 +21,8 @@
         @if (Model.Any())
         {
         <div class="row">
-            <div class="">
-                <input type="text" id="searchTerm" placeholder="Search Cellar" onkeyup="handleSearch()" class="" />
+            <div class="" style="display: flex">
+                    <input type="text" id="searchTerm" placeholder="Buscar Cava" onkeyup="handleSearch()" class="form-control mt-2" style="max-width: 200px;align-items: flex-end;margin-right: 10px" />
 
                 <button type="submit" onclick="handleSearchButton()" class="btn btn-warning mt-2">
                     Clear Search

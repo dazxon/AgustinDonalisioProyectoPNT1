@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="text-center">
+    <h1 class="display-2">Bienvenido a Stock Vinos</h1>
+    <h2>Estos son los vinos mas consumidos!</h2>
+</div>
+
+<div class="text-center">
+    <h5 class="text-muted" style="padding: 10px">Vino más consumido del año: <span class="text-danger">@ViewBag.MostFrequentWineYear</span> con <span class="text-danger">@ViewBag.MostFrequentWineYearCount</span> consumos</h5>
+    <h5 class="text-muted">Vino más consumido del mes: <span class="text-danger">@ViewBag.MostFrequentWineMonth</span> con <span class="text-danger">@ViewBag.MostFrequentWineMonthCount</span> consumos</h5>
+</div>

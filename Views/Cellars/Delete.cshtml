@@ -1,7 +1,7 @@
 ﻿@model AgustinDonalisioProyectoPNT1.Models.Cellar
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Borrar";
 }
 
 <!DOCTYPE html>
@@ -15,10 +15,17 @@
     <div class="container">
         <div class="card mx-auto" style="max-width: 400px;">
             <div class="card-header text-center">
-                <h3>Are you sure you want to delete "@Html.DisplayFor(e => e.Name)"?</h3>
+                <h3>¿ Estas seguro de borrar "@Html.DisplayFor(e => e.Name)" ?</h3>
             </div>
             <div class="card-body">
-                <h4 class="card-title">@Html.DisplayFor(e => e.Name): @Html.DisplayFor(model => model.WineQuantity) Wines</h4>
+                @if(Model.WineQuantity == 0)
+                {
+                    <h4 class="card-title">Actualmente no tiene vinos</h4>
+                }
+                else
+                {
+                    <h4 class="card-title">Tiene @Html.DisplayFor(model => model.WineQuantity) @((Model.WineQuantity == 1) ? "vino" : "vinos")</h4>
+                }
                 <hr />
                 <div class="row">
                     <div class="col-sm-4">
