@@ -8,7 +8,14 @@
     <h2>Estos son los vinos mas consumidos!</h2>
 </div>
 
+@if (ViewBag.MostFrequentWineYear == null)
+{
+    <h4 class="text-center pt-5">Todavia no se han consumido vinos!</h4>
+}
+else
+{
 <div class="text-center">
     <h5 class="text-muted" style="padding: 10px">Vino más consumido del año: <span class="text-danger">@ViewBag.MostFrequentWineYear</span> con <span class="text-danger">@ViewBag.MostFrequentWineYearCount</span> consumos</h5>
     <h5 class="text-muted">Vino más consumido del mes: <span class="text-danger">@ViewBag.MostFrequentWineMonth</span> con <span class="text-danger">@ViewBag.MostFrequentWineMonthCount</span> consumos</h5>
 </div>
+}

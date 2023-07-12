@@ -284,6 +284,8 @@ namespace AgustinDonalisioProyectoPNT1.Controllers
                     cellarWine.Quantity += model.WineQuantity;
                     _context.CellarWines.Update(cellarWine);
                 }
+                await _context.SaveChangesAsync();
+
 
                 Cellar cellar = await _context.Cellars.FirstOrDefaultAsync(e => e.Id == model.IdCellar);
                 if (cellar != null)
